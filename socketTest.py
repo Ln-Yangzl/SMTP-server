@@ -1,5 +1,6 @@
 from socket import *
 from email.base64mime import body_encode
+import ssl
 
 msg = "\r\n I love computer networks!"
 endMsg = "\r\n.\r\n"
@@ -36,10 +37,30 @@ recv1 = clientSocket.recv(1024).decode()
 print(recv1)
 if '250' != recv1[:3]:
     print('250 reply not received from server.')
+
+
+# send mail
+sendCommond = f'STARTTLS\r\n'
+# print(sendCommond)
+clientSocket.send(sendCommond.encode())
+recv3 = clientSocket.recv(1024).decode()
+print(recv3)
+
+# wrap socket to ssl connection
+context = ssl.create_default_context()
+clientSocket = context.wrap_socket(clientSocket, server_hostname=mailServer)
+print('get version')
+# print(clientSocket.version())
+print('end')
+
+
+
+
 # 发送"AUTH PLAIN"命令，验证身份.服务器将返回状态码334（服务器等待用户输入验证信息
 user_pass_encode64 = body_encode(f"\0{username}\0{password}".encode('ascii'), eol='')
 clientSocket.sendall(f'AUTH PLAIN {user_pass_encode64}\r\n'.encode())
 recv2 = clientSocket.recv(1024).decode()
+print('authentication.......')
 print(recv2)
 
 # send mail
@@ -58,4 +79,43 @@ print(recv3)
 if '250' != recv3[:3]:
     print('250 reply not received from server.')
 
+sendCommond = f'RCPT TO: <979710450@qq.com>\r\n'
+clientSocket.send(sendCommond.encode())
+recv3 = clientSocket.recv(1024).decode()
+print(recv3)
+if '250' != recv3[:3]:
+    print('250 reply not received from server.')
 
+sendCommond = f'DATA\r\n'
+clientSocket.send(sendCommond.encode())
+recv3 = clientSocket.recv(1024).decode()
+print(recv3)
+
+
+sendCommond = f'subject: test for SMTP commond\r\n'
+clientSocket.send(sendCommond.encode())
+
+sendCommond = f'from: <{fromAddress}>\r\n'
+clientSocket.send(sendCommond.encode())
+
+
+sendCommond = f'to: <{toAddress}>\r\n'
+clientSocket.send(sendCommond.encode())
+
+sendCommond = f'to: <979710450@qq.com>\r\n'
+clientSocket.send(sendCommond.encode())
+
+sendCommond = f'\r\nabcd line1\r\ncdef line2\r\n'
+clientSocket.send(sendCommond.encode())
+
+sendCommond = f'\r\n.\r\n'
+clientSocket.send(sendCommond.encode())
+recv3 = clientSocket.recv(1024).decode()
+print(recv3)
+
+#quit
+sendCommond = f'QUIT\r\n'
+# print(sendCommond)
+clientSocket.send(sendCommond.encode())
+recv3 = clientSocket.recv(1024).decode()
+print(recv3)
