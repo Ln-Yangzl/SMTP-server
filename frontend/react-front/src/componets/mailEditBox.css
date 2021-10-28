@@ -1,0 +1,39 @@
+.mail-edit-box{
+    margin: 10px auto;
+    min-height: 50%;
+    width: 95%;
+}
+
+
+
+.mail-edit-box .mail-items .item{
+    margin: 5px 0;
+    color: #000;
+}
+
+.mail-edit-box .mail-items .item > span{
+    display: inline-block;
+    width: 50px;
+    vertical-align: top;
+}
+
+.mail-edit-box .mail-items .item > :is(input, textarea){
+    margin-left: 10px;
+    width: 95%;
+}
+
+.mail-edit-box .mail-items .item > textarea{
+    min-height: 70vh;
+}
+
+.mail-edit-box .mail-controller{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.mail-edit-box .mail-controller .btn{
+    margin: 0 5px;
+    width: 75px;
+    height: 40px;
+}

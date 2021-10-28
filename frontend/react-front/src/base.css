@@ -32,6 +32,9 @@ textarea {
     color: #767676;
 }
 
+:is(input, select, textarea):focus-visible{
+    outline: none;
+}
 
 ul,
 li {
