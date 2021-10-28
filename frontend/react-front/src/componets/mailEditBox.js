@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { green } from '@mui/material/colors';
@@ -28,10 +29,22 @@ export default function MailEditBox(props) {
             ...mailValues,
             [target]: newValue,
         });
-        console.log(newValue);
+        // console.log(newValue);
     }
 
     const handleSend = () => {
+
+        let url = React.$getUrl('/test');
+        axios.post(url, {
+            receivers: mailValues.receivers,
+            subject: mailValues.subject,
+            content: mailValues.content,
+        }).then((response) => {
+            console.log(response);
+        }).catch((response) => {
+            console.log(response)
+        })
+
         if (!btnControls.loading) {
             setBtnControls({
                 ...btnControls,

@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom'
 
+import './utils/tools'
 import SendMail from './pages/sendMail'
 
 import './base.css'
