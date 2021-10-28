@@ -1,8 +1,9 @@
 from socket import *
 from typing import Tuple
 from email.base64mime import body_encode
-from SMTPUtils import SMTPServerError
+from utils.SMTPUtils import SMTPServerError
 import ssl
+import traceback
 
 class MailSender:
 
@@ -56,7 +57,7 @@ class MailSender:
             raise SMTPServerError(f"235 reply not received from server!\n reveived: {recv}")
         # print('auth seccess!')
 
-    def sendMails(self, receivers:Tuple, subject:str, content:str):
+    def __sendMails(self, receivers:Tuple, subject:str, content:str):
     
         self.sendTemplate('MAIL FROM: ', f'<{self.fromAddress}>\r\n', '250')
         for receiver in receivers:
@@ -70,6 +71,17 @@ class MailSender:
             self.sendTemplate('to: ', f'<{receiver}>\r\n')
         self.sendTemplate('\r\n', content + '\r\n')
         self.sendTemplate('\r\n', '.\r\n', '250')
+
+    # wrap sendMails function, catch excption
+    # return 0 if send success
+    def sendMails(self, receivers:str, subject:str, content:str):
+        returnStatus = 0
+        try:
+            self.__sendMails(receivers.split(';'), subject, content)
+        except SMTPServerError:
+            traceback.print_exc()
+            returnStatus = 1
+        return returnStatus
     
     def close(self):
         self.sendTemplate('QUIT', '\r\n', '221')

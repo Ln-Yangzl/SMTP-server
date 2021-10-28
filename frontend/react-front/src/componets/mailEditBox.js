@@ -34,7 +34,7 @@ export default function MailEditBox(props) {
 
     const handleSend = () => {
 
-        let url = React.$getUrl('/test');
+        let url = React.$getUrl('/sendmail');
         axios.post(url, {
             receivers: mailValues.receivers,
             subject: mailValues.subject,
