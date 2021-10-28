@@ -1,9 +1,13 @@
 import ReactDOM from 'react-dom'
 
+import SendMail from './pages/sendMail'
+
+import './base.css'
+import './common.css'
 
 function App(){
     return(
-        <div>hello SMTP</div>
+        <SendMail />
     )
 }
 

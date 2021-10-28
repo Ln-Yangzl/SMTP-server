@@ -1,0 +1,238 @@
+/*---------------------------------
+            LEFT SIDE
+----------------------------------*/
+
+.left-side {
+    width: 240px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.sticky-left-side {
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+
+
+.left-side-collapsed .sticky-left-side {
+    overflow-y: visible;
+}
+
+.logo {
+    padding-top: 5px;
+    height: 50px;
+}
+
+.logo a {
+    font-size: 28px;
+    color: #fff;
+    margin: 0 0 0 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.logo-icon {
+    display: none;
+}
+
+.left-side-collapsed .logo-icon {
+    height: 45px;
+    margin-top: -48px;
+    display: block !important;
+}
+
+.left-side-inner {
+    padding: 0px;
+    margin-bottom: 50px;
+}
+
+.left-side .searchform {
+    display: none;
+}
+
+.left-side .searchform::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.left-side .searchform input {
+    padding: 10px;
+    width: 90%;
+    margin: 0 0 20px 12px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: none;
+}
+
+.left-side .logged-user {
+    padding: 0 0 15px 12px;
+    margin: 0 0 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
+}
+
+.left-side .logged-user .media-object {
+    width: 45px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    float: left;
+}
+
+.left-side .logged-user .media-body {
+    margin-left: 60px;
+    color: #d7d7d7;
+}
+
+.left-side .logged-user .media-body h4 {
+    font-size: 15px;
+    margin: 5px 0 0 0;
+}
+
+.left-side .logged-user .media-body h4 a {
+    color: #fff;
+}
+
+.left-side .logged-user .media-body span {
+    font-style: italic;
+    font-size: 11px;
+    opacity: 0.5;
+}
+
+.custom-nav {
+    margin-bottom: 10px;
+}
+
+.custom-nav > li > a {
+    display: inline-block;
+    width: 100%;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    text-align: center;
+}
+
+.custom-nav > li > a:hover,
+.custom-nav > li > a:active {
+    background-color: #353f4f;
+    color: #65cea7;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+/* .custom-nav > li.menu-list > a {
+    background: transparent url(../images/plus-white.png) no-repeat 93% center;
+} */
+
+/* .custom-nav > li.menu-list > a:hover {
+    background-color: #353f4f;
+    background-image: url(../images/plus.png);
+} */
+
+/* .custom-nav > li.nav-active > a {
+    background-color: #353f4f;
+    background-image: url(../images/minus.png);
+    color: #65cea7;
+} */
+
+.custom-nav > li.nav-active > ul{
+    display: block;
+}
+
+/* .custom-nav > li.nav-active > a:hover {
+    background-image: url(../images/minus.png);
+} */
+
+.custom-nav > li.active > a,
+.custom-nav > li.active > a:hover,
+.custom-nav > li.active > a:focus {
+    background-color: #353f4f;
+    color: #65cea7;
+}
+
+/* .custom-nav > li.menu-list.active > a {
+    background-image: url(../images/plus.png);
+}
+
+.custom-nav > li.nav-active.active > a {
+    background-image: url(../images/minus.png);
+}
+
+.custom-nav > li.nav-active.active > a:hover {
+    background-image: url(../images/minus.png);
+} */
+
+.custom-nav li .fa {
+    font-size: 16px;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 16px;
+    text-align: center;
+}
+
+.custom-nav .sub-menu-list {
+    list-style: none;
+    display: none;
+    margin: 0;
+    padding: 0;
+    background: #353f4f;
+}
+
+.custom-nav .sub-menu-list > li > a {
+    color: #fff;
+    font-size: 13px;
+    display: block;
+    padding: 10px 5px 10px 50px;
+    -moz-transition: all 0.2s ease-out 0s;
+    -webkit-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+
+.custom-nav .sub-menu-list > li > a:hover,
+.custom-nav .sub-menu-list > li > a:active,
+.custom-nav .sub-menu-list > li > a:focus {
+    text-decoration: none;
+    color: #65cea7;
+    background: #2a323f;
+}
+
+.custom-nav .sub-menu-list > li .fa {
+    font-size: 12px;
+    opacity: 0.5;
+    margin-right: 5px;
+    text-align: left;
+    width: auto;
+    vertical-align: baseline;
+}
+
+.custom-nav .sub-menu-list > li.active > a {
+    color: #65CEA7;
+    background-color: #2A323F;
+}
+
+.custom-nav .sub-menu-list ul {
+    margin-left: 12px;
+    border: 0;
+}
+
+.custom-nav .menu-list.active ul {
+    display: block;
+}
+
+
+/*-----------------------------
+        MAIN CONTENT
+------------------------------*/
+
+.main-content {
+    margin-left: 240px;
+    background: #eff0f4;
+    min-height: 1000px;
+}
