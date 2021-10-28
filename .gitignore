@@ -1,6 +1,7 @@
 # backend part
 **/__pycache__
-
+# SMTPSender init params
+/backend/utils/SMTPSenderConfig.yaml
 
 # frontend part
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

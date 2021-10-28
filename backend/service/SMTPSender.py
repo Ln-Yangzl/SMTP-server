@@ -1,3 +1,4 @@
+from binascii import Error
 from socket import *
 from typing import Tuple
 from email.base64mime import body_encode
@@ -12,17 +13,31 @@ class MailSender:
                  serverPort:int = 587,
                  fromAddress:str = "565213263@qq.com",
                  username:str = "565213263@qq.com",
-                 password:str = "jdczixsdezcmbdii"):
+                 password:str = None):
+        if password == None:
+            raise NameError("password is None !")
         self.mailServer = mailServer
         self.fromAddress = fromAddress
         self.username = username
         self.password = password
         self.clientSocket = socket(AF_INET, SOCK_STREAM)
-        self.clientSocket.connect((mailServer, serverPort))  # connect只能接收一个参数
+        self.connectParams = (mailServer, serverPort)
+        self.clientSocket.connect(self.connectParams)  # connect只能接收一个参数
         recv = self.clientSocket.recv(1024).decode()
         if '220' != recv[:3]:
             raise SMTPServerError(f"220 reply not received from server!\n reveived: {recv}")
 
+        self.sendHELO()
+        self.buildSTLConnection()
+        self.authentication()
+
+    def rebuildConnection(self):
+        print('Rebuld connection......')
+        self.clientSocket.close()
+        self.clientSocket.connect(self.connectParams)  # connect只能接收一个参数
+        recv = self.clientSocket.recv(1024).decode()
+        if '220' != recv[:3]:
+            raise SMTPServerError(f"220 reply not received from server!\n reveived: {recv}")
         self.sendHELO()
         self.buildSTLConnection()
         self.authentication()
@@ -79,8 +94,12 @@ class MailSender:
         try:
             self.__sendMails(receivers.split(';'), subject, content)
         except SMTPServerError:
-            traceback.print_exc()
-            returnStatus = 1
+            try:
+                self.rebuildConnection()
+                self.__sendMails(receivers.split(';'), subject, content)
+            except SMTPServerError:
+                traceback.print_exc()
+                returnStatus = 1
         return returnStatus
     
     def close(self):

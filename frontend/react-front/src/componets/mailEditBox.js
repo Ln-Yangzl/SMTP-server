@@ -6,6 +6,7 @@ import { green } from '@mui/material/colors';
 import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
+import WarningOutlinedIcon from '@mui/icons-material/WarningOutlined';
 import './mailEditBox.css';
 
 
@@ -34,43 +35,56 @@ export default function MailEditBox(props) {
 
     const handleSend = () => {
 
-        let url = React.$getUrl('/sendmail');
-        axios.post(url, {
-            receivers: mailValues.receivers,
-            subject: mailValues.subject,
-            content: mailValues.content,
-        }).then((response) => {
-            console.log(response);
-        }).catch((response) => {
-            console.log(response)
-        })
-
         if (!btnControls.loading) {
             setBtnControls({
-                ...btnControls,
+                error: false,
                 success: false,
                 loading: true,
             })
-            window.setTimeout(() => {
+            let url = React.$getUrl('/sendmail');
+            axios.post(url, {
+                receivers: mailValues.receivers,
+                subject: mailValues.subject,
+                content: mailValues.content,
+            }).then((response) => {
+                // console.log(response);
+                let responseBody = response.data;
+                if (responseBody.status === 0) {
+                    setBtnControls({
+                        ...btnControls,
+                        success: true,
+                        loading: false,
+                    })
+                } else {
+                    React.$logCommonError(responseBody)
+                    setBtnControls({
+                        error: true,
+                        success: false,
+                        loading: false,
+                    })
+                }
+                
+            }).catch((response) => {
+                React.$logRuntimeError(response)
                 setBtnControls({
-                    ...btnControls,
-                    success: true,
+                    error: true,
+                    success: false,
                     loading: false,
                 })
-            }, 2000);
-          }
+            })
+        }
     }
 
     const buttonSx = {
         ...(btnControls.success && {
             cursor: 'default',
-          bgcolor: green[500],
-          '&:hover': {
-            bgcolor: green[700],
-          },
+            bgcolor: green[500],
+            '&:hover': {
+                bgcolor: green[700],
+            },
         }),
-      };
- 
+    };
+
     return (
         <div className='mail-edit-box'>
             <ul className='mail-items'>
@@ -92,9 +106,9 @@ export default function MailEditBox(props) {
                     <Fab
                         aria-label="save"
                         color="primary"
-                        sx={buttonSx}
+                        sx={btnControls.error ? {cursor: 'default', bgcolor: '#d9534f'} : buttonSx}
                     >
-                        {btnControls.success ? <CheckIcon /> : <SaveIcon />}
+                        {btnControls.error ? <WarningOutlinedIcon /> : (btnControls.success ? <CheckIcon /> : <SaveIcon />)}
                     </Fab>
                     {btnControls.loading && (
                         <CircularProgress

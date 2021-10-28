@@ -4,6 +4,7 @@ from flask_cors import CORS
 import json
 from service.mailStorage import MailStorage
 from service.SMTPSender import MailSender
+import yaml
 
 def create_app(test_config=None):
     # create and configure the app
@@ -14,7 +15,7 @@ def create_app(test_config=None):
 
     # 注入service 依赖
     mailStorage = MailStorage()
-    mailSender = MailSender()
+    mailSender = MailSender(**getSMTPSenderKwargs())
 
     @app.route('/test', methods={'GET', 'POST'})
     def api_test():
@@ -33,12 +34,24 @@ def create_app(test_config=None):
         print('get data:')
         print(data)
         mailSendStatus = mailSender.sendMails(**data)
-        status = mailStorage.saveSendedMail(data)
-        print('status: %d'%status)
-        return 'mailStorage status: %d, mailSend status: %d'%(status, mailSendStatus)
+        mailStorageStatus = mailStorage.saveSendedMail(data)
+        info = 'mailStorage status: %d, mailSend status: %d'%(mailStorageStatus, mailSendStatus)
+        print(info)
+
+
+        return {'status': mailSendStatus or mailStorageStatus, 'error': info}
 
 
     return app
+
+def getSMTPSenderKwargs() -> dict:
+    file = open('./utils/SMTPSenderConfig.yaml')
+    kwargs = yaml.load(file.read(), Loader=yaml.Loader)
+    file.close()
+    print('read SMTPSenderConfig.yaml:')
+    print(kwargs)
+    return kwargs
+    
 
 if __name__=='__main__':
     app=create_app()
