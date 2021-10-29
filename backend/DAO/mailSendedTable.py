@@ -40,7 +40,7 @@ class MailSendedTable:
     def selectAllMails(self) -> tuple:
         cursor = self.db.cursor()
         sql = """
-            select mail_id, receivers, subject, content from mail_sended
+            select mail_id, receivers, subject, send_time from mail_sended
         """
         result = None
         try:

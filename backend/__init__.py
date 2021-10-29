@@ -41,6 +41,9 @@ def create_app(test_config=None):
 
         return {'status': mailSendStatus or mailStorageStatus, 'error': info}
 
+    @app.route('/getAllSendedMails', methods={'GET'})
+    def getAllSendedMails():
+        return mailStorage.getAllSendedMails()
 
     return app
 
