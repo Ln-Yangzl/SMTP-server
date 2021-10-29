@@ -1,4 +1,4 @@
-
+import {Link} from 'react-router-dom'
 
 export default function SideBar(props) {
 
@@ -7,7 +7,7 @@ export default function SideBar(props) {
         <div className="left-side sticky-left-side">
 
             <div className="logo">
-                <a href="index.html"><img src="images/logo.png" alt="" /></a>
+                <Link to="/"><img src="images/logo.png" alt="" /></Link>
             </div>
 
 
@@ -16,9 +16,9 @@ export default function SideBar(props) {
 
                 <ul className="nav nav-pills nav-stacked custom-nav">
 
-                    <li><a href="/#"> <span>写信件</span></a></li>
-                    <li><a href="/#"> <span>发件箱</span></a></li>
-                    <li><a href="/#"> <span>草稿箱</span></a></li>
+                    <li><Link to="/send"> <span>写信件</span></Link></li>
+                    <li><Link to="/outbox"> <span>发件箱</span></Link></li>
+                    <li><Link to="/"> <span>草稿箱</span></Link></li>
 
                 </ul>
 
