@@ -13,9 +13,9 @@ import './mailEditBox.css';
 export default function MailEditBox(props) {
 
     const [mailValues, setMailValues] = React.useState({
-        receivers: '',
-        subject: '',
-        content: '',
+        receivers: props.receivers || '',
+        subject: props.subject || '',
+        content: props.content || '',
     })
 
     const [btnControls, setBtnControls] = React.useState({
@@ -75,6 +75,10 @@ export default function MailEditBox(props) {
         }
     }
 
+    const defaultSave = () => {
+        
+    }
+
     const buttonSx = {
         ...(btnControls.success && {
             cursor: 'default',
@@ -125,7 +129,7 @@ export default function MailEditBox(props) {
                     )}
                 </Box>
                 <button className='btn btn-danger'>重置</button>
-                <button className='btn btn-default'>保存</button>
+                <button className='btn btn-default' onClick={props.btnHandleClick || defaultSave}>{props.btnName || '保存'}</button>
                 <button className='btn btn-info' onClick={handleSend}>发送</button>
             </div>
         </div>

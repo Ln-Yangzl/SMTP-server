@@ -27,3 +27,9 @@ class MailStorage:
         else:
             res = {'status': 1, 'error': 'sql execute error !'}
         return res
+
+    def getMailContentById(self, mailId):
+        res = self.mailSendedTable.queryMailContentById(mailId)
+        if res == None:
+            return {'status': 1, 'error': 'sql execute error !'}
+        return {'status': 0, 'data': res}

@@ -53,6 +53,24 @@ class MailSendedTable:
             print('select error !')
             traceback.print_exc()
         return result
+
+    def queryMailContentById(self, mailId) -> str:
+        cursor = self.db.cursor()
+        sql = """
+            select content from mail_sended
+            where mail_id = %d
+        """%(mailId)
+        result = None
+        try:
+            print('start to execute:')
+            print(sql)
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            print('success !')
+        except pymysql.Error:
+            print('select error !')
+            traceback.print_exc()
+        return result
     
     def __del__(self):
         self.db.close()

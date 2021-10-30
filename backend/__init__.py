@@ -45,6 +45,13 @@ def create_app(test_config=None):
     def getAllSendedMails():
         return mailStorage.getAllSendedMails()
 
+    @app.route('/getMailContent', methods={"GET"})
+    def getMailContent():
+        mailId = request.args.get("mailId")
+        if mailId == None:
+            return {'status': 1, 'error': '缺失请求参数'}
+        return mailStorage.getMailContentById(int(mailId))
+
     return app
 
 def getSMTPSenderKwargs() -> dict:
