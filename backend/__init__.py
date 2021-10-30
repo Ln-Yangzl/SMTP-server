@@ -43,6 +43,19 @@ def create_app(test_config=None):
 
         return {'status': mailSendStatus or mailStorageStatus, 'error': info}
 
+    @app.route('/saveDraft', methods = {'POST'})
+    def saveDraft():
+        data = json.loads(request.data)
+        print('/saveDraft called!')
+        print('get data:')
+        print(data)
+        saveStatus = mailDrafts.saveDraft(data)
+        error = ''
+        if saveStatus!=0:
+            error = 'saveDraft failed!'
+        return {'status': saveStatus, 'error': error}
+
+
     @app.route('/getAllSendedMails', methods={'GET'})
     def getAllSendedMails():
         return mailStorage.getAllSendedMails()

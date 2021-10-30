@@ -75,8 +75,52 @@ export default function MailEditBox(props) {
         }
     }
 
-    const defaultSave = () => {
-        
+    const handleSave = () => {
+        if (!btnControls.loading) {
+            setBtnControls({
+                error: false,
+                success: false,
+                loading: true,
+            });
+            let url = React.$getUrl('/saveDraft')
+            axios.post(url, {
+                receivers: mailValues.receivers,
+                subject: mailValues.subject,
+                content: mailValues.content,
+            }).then((response) => {
+                // console.log(response);
+                let responseBody = response.data;
+                if (responseBody.status === 0) {
+                    setBtnControls({
+                        ...btnControls,
+                        success: true,
+                        loading: false,
+                    })
+                } else {
+                    React.$logCommonError(responseBody)
+                    setBtnControls({
+                        error: true,
+                        success: false,
+                        loading: false,
+                    })
+                }
+                
+            }).catch((response) => {
+                React.$logRuntimeError(response)
+                setBtnControls({
+                    error: true,
+                    success: false,
+                    loading: false,
+                })
+            })
+        }
+    }
+
+    const handleClear = () => {
+        setMailValues({
+            ...mailValues,
+            content: ''
+        })
     }
 
     const buttonSx = {
@@ -128,8 +172,8 @@ export default function MailEditBox(props) {
                         />
                     )}
                 </Box>
-                <button className='btn btn-danger'>重置</button>
-                <button className='btn btn-default' onClick={props.btnHandleClick || defaultSave}>{props.btnName || '保存'}</button>
+                <button className='btn btn-danger' onClick={handleClear}>重置</button>
+                <button className='btn btn-default' onClick={props.btnHandleClick || handleSave}>{props.btnName || '保存'}</button>
                 <button className='btn btn-info' onClick={handleSend}>发送</button>
             </div>
         </div>

@@ -68,7 +68,7 @@ class MailDraftsTable:
         except pymysql.Error:
             print('select error !')
             traceback.print_exc()
-        return result
+        return result[0][0]
     
     def __del__(self):
         self.db.close()
