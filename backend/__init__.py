@@ -4,6 +4,7 @@ from flask_cors import CORS
 import json
 from service.mailStorage import MailStorage
 from service.SMTPSender import MailSender
+from service.mailDrafts import MailDrafts
 import yaml
 
 def create_app(test_config=None):
@@ -15,6 +16,7 @@ def create_app(test_config=None):
 
     # 注入service 依赖
     mailStorage = MailStorage()
+    mailDrafts = MailDrafts()
     mailSender = MailSender(**getSMTPSenderKwargs())
 
     @app.route('/test', methods={'GET', 'POST'})
@@ -51,6 +53,17 @@ def create_app(test_config=None):
         if mailId == None:
             return {'status': 1, 'error': '缺失请求参数'}
         return mailStorage.getMailContentById(int(mailId))
+
+    @app.route('/getAllDrafts', methods={"GET"})
+    def getAllDrafts():
+        return mailDrafts.getAllDrafts()
+
+    @app.route('/getDraftContent' , methods={"GET"})
+    def getDraftContent():
+        mailId = request.args.get("mailId")
+        if mailId == None:
+            return {'status': 1, 'error': '缺失请求参数'}
+        return mailDrafts.getDraftContentById(int(mailId))
 
     return app
 

@@ -1,17 +1,16 @@
-from DAO.mailSendedTable import MailSendedTable
+from DAO.mailDraftsTable import MailDraftsTable
 
-class MailStorage:
+class MailDrafts:
+    
+    def __init__(self) -> None:
+        self.mailDraftsTable = MailDraftsTable()
 
-    def __init__(self):
-        self.mailSendedTable = MailSendedTable()
-
-    def saveSendedMail(self, newItem:dict):
-        status = self.mailSendedTable.insertItem(**newItem)
+    def saveDraft(self, newItem:dict):
+        status = self.mailDraftsTable.insertItem(**newItem)
         return status
 
-    def getAllSendedMails(self):
-        res = self.mailSendedTable.selectAllMails()
-        # print(res)
+    def getAllDrafts(self):
+        res = self.mailDraftsTable.selectAllMails()
         if res != None:
             # 对象化res为适用格式
             objectifiedRes = []
@@ -27,8 +26,8 @@ class MailStorage:
             res = {'status': 1, 'error': 'sql execute error !'}
         return res
 
-    def getMailContentById(self, mailId):
-        res = self.mailSendedTable.queryMailContentById(mailId)
+    def getDraftContentById(self, draftId):
+        res = self.mailDraftsTable.queryMailContentById(draftId)
         if res == None:
             return {'status': 1, 'error': 'sql execute error !'}
         return {'status': 0, 'data': res}

@@ -6,57 +6,6 @@ import MailEditBox from '../componets/mailEditBox';
 
 export default function SendedBox(props) {
 
-    const data = [
-        {
-            mailId: 1,
-            subject: 'asdfa',
-            receivers: '565213263@qq.com;979710450@qq.com',
-            date: '2021-10-29 09:03:24',
-        },
-        {
-            mailId: 2,
-            subject: 'asdfa',
-            receivers: '565213263@qq.com;979710450@qq.com',
-            date: '2021-10-29 09:03:24',
-        },
-        {
-            mailId: 3,
-            subject: 'asdfa',
-            receivers: '565213263@qq.com;979710450@qq.com',
-            date: '2021-10-29 09:03:24',
-        },
-        {
-            mailId: 4,
-            subject: 'asdfa',
-            receivers: '565213263@qq.com;979710450@qq.com',
-            date: '2021-10-29 09:03:24',
-        },
-        {
-            mailId: 5,
-            subject: 'asdfa',
-            receivers: '565213263@qq.com;979710450@qq.com',
-            date: '2021-10-29 09:03:24',
-        },
-        {
-            mailId: 6,
-            subject: 'asdfa',
-            receivers: '565213263@qq.com;979710450@qq.com',
-            date: '2021-10-29 09:03:24',
-        },
-        {
-            mailId: 7,
-            subject: 'asdfa',
-            receivers: '565213263@qq.com;979710450@qq.com',
-            date: '2021-10-29 09:03:24',
-        },
-        {
-            mailId: 8,
-            subject: 'asdfa',
-            receivers: '565213263@qq.com;979710450@qq.com',
-            date: '2021-10-29 09:03:24',
-        },
-    ];
-
     const [mails, setMails] = useState([]);
     const [showEditBox, setShowEditBox] = useState(false);
     const [mailProps, setMailProps] = useState({
