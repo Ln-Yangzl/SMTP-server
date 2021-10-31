@@ -34,6 +34,22 @@ export default function SendedBox(props) {
         })
     }
 
+    const handleDelete = (mailIndex, mailId) => {
+        let url = React.$getUrl('/deleteMail?mailId=' + mailId)
+        axios.get(url).then((response) => {
+            let responseBody = response.data;
+            if (responseBody.status!==0){
+                React.$logCommonError(responseBody);
+            }  else {
+                let mailsCopy = mails.concat();
+                mailsCopy.splice(mailIndex, 1);
+                setMails(mailsCopy);
+            }
+        }).catch((response) => {
+            React.$logRuntimeError(response)
+        })
+    }
+
     useEffect(() => {
         let url = React.$getUrl('/getAllSendedMails');
         axios.get(url).then((response) => {
@@ -82,7 +98,7 @@ export default function SendedBox(props) {
                                             <th>{value.receivers}</th>
                                             <th>{value.sendTime}</th>
                                             <th>
-                                                <button className='btn btn-danger'>删除</button>
+                                                <button className='btn btn-danger' onClick={() => handleDelete(index, value.mailId)}>删除</button>
                                                 <button className='btn btn-default' onClick={() => handleViewMail(index)}>查看</button>
                                             </th>
                                         </tr>

@@ -29,7 +29,7 @@ React.$getImgUrl = (title) => {
  */
  React.$logCommonError = (responseBody) => {
     console.log('error code:' + responseBody.status);
-    console.log('error info' + responseBody.error);
+    console.log('error info: ' + responseBody.error);
 }
 
 /**

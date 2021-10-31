@@ -64,7 +64,7 @@ def create_app(test_config=None):
     def getMailContent():
         mailId = request.args.get("mailId")
         if mailId == None:
-            return {'status': 1, 'error': '缺失请求参数'}
+            return {'status': 2, 'error': '缺失请求参数'}
         return mailStorage.getMailContentById(int(mailId))
 
     @app.route('/getAllDrafts', methods={"GET"})
@@ -75,8 +75,22 @@ def create_app(test_config=None):
     def getDraftContent():
         mailId = request.args.get("mailId")
         if mailId == None:
-            return {'status': 1, 'error': '缺失请求参数'}
+            return {'status': 2, 'error': '缺失请求参数'}
         return mailDrafts.getDraftContentById(int(mailId))
+
+    @app.route("/deleteMail", methods={"GET"})
+    def deleteMail():
+        mailId = request.args.get("mailId")
+        if mailId == None:
+            return {"status": 2, "error": "缺失mailId参数"}
+        return mailStorage.deleteMailById(int(mailId))
+
+    @app.route("/deleteDraft", methods={"GET"})
+    def deleteDraft():
+        mailId = request.args.get("draftId")
+        if mailId == None:
+            return {"status": 2, "error": "缺失draftId参数"}
+        return mailDrafts.deleteDraftById(int(mailId))
 
     return app
 

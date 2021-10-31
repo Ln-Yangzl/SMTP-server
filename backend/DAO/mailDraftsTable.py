@@ -69,6 +69,25 @@ class MailDraftsTable:
             print('select error !')
             traceback.print_exc()
         return result[0][0]
+
+    def deleteById(self, mailId:int) -> int:
+        cursor = self.db.cursor()
+        sql = """
+            delete from mail_drafts
+            where mail_id = %d
+        """%(mailId)
+        returnStatus = 0
+        try:
+            print('start to  execute:')
+            print(sql)
+            cursor.execute(sql)
+            self.db.commit()
+            print("success !")
+        except pymysql.Error:
+            print("delete error !")
+            self.db.rollback()
+            returnStatus = 1
+        return returnStatus
     
     def __del__(self):
         self.db.close()

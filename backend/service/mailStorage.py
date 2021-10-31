@@ -32,3 +32,9 @@ class MailStorage:
         if res == None:
             return {'status': 1, 'error': 'sql execute error !'}
         return {'status': 0, 'data': res}
+
+    def deleteMailById(self, mailId):
+        status = self.mailSendedTable.deleteById(mailId)
+        if status != 0:
+            return {'status': status, 'error': 'sql execute error !'}
+        return {'status': 0}

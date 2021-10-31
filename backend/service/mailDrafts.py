@@ -26,8 +26,14 @@ class MailDrafts:
             res = {'status': 1, 'error': 'sql execute error !'}
         return res
 
-    def getDraftContentById(self, draftId):
+    def getDraftContentById(self, draftId:int):
         res = self.mailDraftsTable.queryMailContentById(draftId)
         if res == None:
             return {'status': 1, 'error': 'sql execute error !'}
         return {'status': 0, 'data': res}
+
+    def deleteDraftById(self, mailId:int):
+        status = self.mailDraftsTable.deleteById(mailId)
+        if status != 0:
+            return {'status': status, 'error': 'sql execute error !'}
+        return {'status': 0}
