@@ -19,6 +19,7 @@ export default function SideBar(props) {
                     <li><Link to="/send"> <span>写信件</span></Link></li>
                     <li><Link to="/outbox"> <span>发件箱</span></Link></li>
                     <li><Link to="/draftsbox"> <span>草稿箱</span></Link></li>
+                    <li><Link to="/addressbook"> <span>通讯录</span></Link></li>
 
                 </ul>
 

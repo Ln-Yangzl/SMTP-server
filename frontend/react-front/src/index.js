@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import SendMail from './pages/sendMail'
 import SendedBox from './pages/sendedBox';
 import DraftsBox from './pages/draftsBox';
+import AddressBook from './pages/addressBook';
 
 import './utils/tools'
 import './base.css'
@@ -19,6 +20,8 @@ function App(){
                 <Route path='/outbox' component={SendedBox} />
 
                 <Route path='/draftsbox' component={DraftsBox} />
+
+                <Route path='/addressbook' component={AddressBook} />
 
                 <Route path='/'>
                     <Redirect to='/send' />
