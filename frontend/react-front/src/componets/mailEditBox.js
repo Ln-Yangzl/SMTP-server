@@ -80,7 +80,7 @@ export default function MailEditBox(props) {
                 let responseBody = response.data;
                 if (responseBody.status === 0) {
                     setBtnControls({
-                        ...btnControls,
+                        error: false,
                         success: true,
                         loading: false,
                     })

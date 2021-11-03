@@ -94,6 +94,7 @@ class MailSender:
         try:
             self.__sendMails(receivers.split(';'), subject, content)
         except SMTPServerError:
+            print(repr(SMTPServerError))
             try:
                 self.rebuildConnection()
                 self.__sendMails(receivers.split(';'), subject, content)
