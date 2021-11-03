@@ -33,7 +33,7 @@ class MailSender:
 
     def rebuildConnection(self):
         print('Rebuld connection......')
-        self.clientSocket.close()
+        self.clientSocket = socket(AF_INET, SOCK_STREAM)
         self.clientSocket.connect(self.connectParams)  # connect只能接收一个参数
         recv = self.clientSocket.recv(1024).decode()
         if '220' != recv[:3]:
@@ -94,7 +94,7 @@ class MailSender:
         try:
             self.__sendMails(receivers.split(';'), subject, content)
         except SMTPServerError:
-            print(repr(SMTPServerError))
+            print(SMTPServerError.getMessage())
             try:
                 self.rebuildConnection()
                 self.__sendMails(receivers.split(';'), subject, content)
