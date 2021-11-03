@@ -24,6 +24,22 @@ export default function MailEditBox(props) {
         error: false,
     })
 
+    const [addressBook, setAddressBook] = React.useState([])
+
+    React.useEffect(() => {
+        let url = React.$getUrl('/getAddressBook');
+        axios.get(url).then((response) => {
+            let responseBody = response.data
+            if (responseBody.status === 0) {
+                setAddressBook(responseBody.data)
+            } else {
+                React.$logCommonError(responseBody);
+            }
+        }).catch((response) => {
+            React.$logRuntimeError(response)
+        })
+    }, [])
+
     const handleMailValuesChange = (e, target) => {
         let newValue = e.target.value;
         setMailValues({
@@ -31,6 +47,19 @@ export default function MailEditBox(props) {
             [target]: newValue,
         });
         // console.log(newValue);
+    }
+
+    const handleAddFromAddressBook = (value) => {
+        let address = '';
+        if (mailValues.receivers.length === 0) {
+            address = value;
+        } else {
+            address = ';' + value;
+        }
+        setMailValues({
+            ...mailValues,
+            receivers: mailValues.receivers + address,
+        });
     }
 
     const handleSend = () => {
@@ -139,6 +168,25 @@ export default function MailEditBox(props) {
                 <li className='item'>
                     <span>收件人</span>
                     <input type='text' value={mailValues.receivers} onChange={(e) => handleMailValuesChange(e, 'receivers')} />
+                </li>
+                <li className='info-item'>
+                    <span>
+                        可输入多个收件人，以分号分隔
+                    </span>| 
+                    <span className='outbox'>
+                        从通讯录添加
+                        <div className='fill-box'></div>
+                        <ul>
+                            <div className='triangle-up'></div>
+                            {addressBook.map((value, index) => {
+                                return (
+                                    <li key={index} onClick={() => handleAddFromAddressBook(value.address)}>
+                                        {value.name + ' ' + value.address}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </span>
                 </li>
                 <li className='item'>
                     <span>主题</span>
